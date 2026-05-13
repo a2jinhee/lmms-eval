@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 from typing import List, Optional, Tuple, Union
 
@@ -269,6 +270,11 @@ class HunYuanVL(lmms):
 
                 output_ids = [out[len(inp):] for inp, out in zip(inputs["input_ids"], generated_ids)]
                 text_output = self._processor.batch_decode(output_ids, skip_special_tokens=True)[0]
+
+                if self.enable_thinking:
+                    m = re.search(r"<answer>(.*?)</answer>", text_output, re.DOTALL)
+                    if m:
+                        text_output = m.group(1).strip()
 
                 for term in until:
                     if term:
