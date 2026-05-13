@@ -30,10 +30,17 @@ def _extract_answer_letter(text: str) -> str:
     'C' -> 'C'
     '(C)' -> 'C'
     'A.' -> 'A'
+    'Answer: **A**' -> 'A'
+    'Answer: (A)' -> 'A'
 
     Return an empty string if no letter is found.
     """
     text = text.strip()
+    # Handle verbose outputs: "Answer: A", "Answer: **A**", "Answer: (A)"
+    m = re.search(r'\bAnswer\s*[:\s]\s*\*{0,2}\(?([A-Z])\)?', text, re.IGNORECASE)
+    if m:
+        return m.group(1).upper()
+    # Handle letter at start of string: "A", "(A)", "A)", "A."
     match = re.match(r"[\(\s]*([A-Z])[\)\.\s]*", text, flags=re.IGNORECASE)
     if match:
         return match.group(1).upper()

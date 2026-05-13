@@ -40,6 +40,7 @@ AVAILABLE_SIMPLE_MODELS = {
     "gpt4o_audio": "GPT4OAudio",
     "gemma3": "Gemma3",
     "gpt4v": "GPT4V",
+    "hunyuan_vl": "HunYuanVL",
     "idefics2": "Idefics2",
     "illume_plus": "ILLUMEPlus",
     "instructblip": "InstructBLIP",
